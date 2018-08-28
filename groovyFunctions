@@ -1,0 +1,23 @@
+--Time functions
+
+today = new Date().format("yyyy-MM-dd'T'HH:mm:ss")
+testRunner.testCase.setPropertyValue("CURTIME",today)
+
+def d = (new Date()).format("yyyy-MM-dd'T'HH:mm:ss")
+log.info d
+
+use(groovy.time.TimeCategory) {
+    def halfHourFromNow = new Date() + 2.hour + 30.minutes
+    log.info halfHourFromNow.format("yyyy-MM-dd'T'HH:mm:ss")
+}
+
+
+-- Reading response and setting variables
+
+content =  testRunner.testCase.testSteps['CreateYVWWORKORDER'].testRequest.response.responseContent
+s_start = content.indexOf("<WONUM>")
+s_end = content.substring(s_start).indexOf("</WONUM>")
+WONUM =  content.substring(s_start + '<WONUM>'.length(),s_start + s_end)
+testRunner.testCase.setPropertyValue("WONUM",WONUM)
+today = new Date().format("yyyy-MM-dd'T'HH:mm:ss")
+testRunner.testCase.setPropertyValue("CURTIME",today)
